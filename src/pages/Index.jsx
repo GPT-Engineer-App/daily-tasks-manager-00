@@ -8,6 +8,11 @@ import {
   Text,
   Checkbox,
   IconButton,
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
 } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
 
@@ -33,6 +38,10 @@ const Index = () => {
     setTodos(newTodos);
   };
 
+  const allTodos = todos;
+  const completedTodos = todos.filter(todo => todo.completed);
+  const pendingTodos = todos.filter(todo => !todo.completed);
+
   return (
     <Container centerContent maxW="container.md" py={10}>
       <VStack spacing={4} width="100%">
@@ -49,23 +58,72 @@ const Index = () => {
             Add
           </Button>
         </HStack>
-        <VStack width="100%" spacing={2}>
-          {todos.map((todo, index) => (
-            <HStack key={index} width="100%" justifyContent="space-between">
-              <Checkbox
-                isChecked={todo.completed}
-                onChange={() => toggleTodo(index)}
-              >
-                <Text as={todo.completed ? "s" : ""}>{todo.text}</Text>
-              </Checkbox>
-              <IconButton
-                aria-label="Delete"
-                icon={<FaTrash />}
-                onClick={() => deleteTodo(index)}
-              />
-            </HStack>
-          ))}
-        </VStack>
+        <Tabs width="100%">
+          <TabList>
+            <Tab>All</Tab>
+            <Tab>Completed</Tab>
+            <Tab>Pending</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <VStack width="100%" spacing={2}>
+                {allTodos.map((todo, index) => (
+                  <HStack key={index} width="100%" justifyContent="space-between">
+                    <Checkbox
+                      isChecked={todo.completed}
+                      onChange={() => toggleTodo(index)}
+                    >
+                      <Text as={todo.completed ? "s" : ""}>{todo.text}</Text>
+                    </Checkbox>
+                    <IconButton
+                      aria-label="Delete"
+                      icon={<FaTrash />}
+                      onClick={() => deleteTodo(index)}
+                    />
+                  </HStack>
+                ))}
+              </VStack>
+            </TabPanel>
+            <TabPanel>
+              <VStack width="100%" spacing={2}>
+                {completedTodos.map((todo, index) => (
+                  <HStack key={index} width="100%" justifyContent="space-between">
+                    <Checkbox
+                      isChecked={todo.completed}
+                      onChange={() => toggleTodo(index)}
+                    >
+                      <Text as={todo.completed ? "s" : ""}>{todo.text}</Text>
+                    </Checkbox>
+                    <IconButton
+                      aria-label="Delete"
+                      icon={<FaTrash />}
+                      onClick={() => deleteTodo(index)}
+                    />
+                  </HStack>
+                ))}
+              </VStack>
+            </TabPanel>
+            <TabPanel>
+              <VStack width="100%" spacing={2}>
+                {pendingTodos.map((todo, index) => (
+                  <HStack key={index} width="100%" justifyContent="space-between">
+                    <Checkbox
+                      isChecked={todo.completed}
+                      onChange={() => toggleTodo(index)}
+                    >
+                      <Text as={todo.completed ? "s" : ""}>{todo.text}</Text>
+                    </Checkbox>
+                    <IconButton
+                      aria-label="Delete"
+                      icon={<FaTrash />}
+                      onClick={() => deleteTodo(index)}
+                    />
+                  </HStack>
+                ))}
+              </VStack>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </VStack>
     </Container>
   );
